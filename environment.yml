@@ -1,0 +1,9 @@
+name: l1-python
+channels:
+  - defaults
+dependencies:
+  - flake8
+  - jupyter
+  - matplotlib
+  - mypy
+  - numpy
