@@ -5,6 +5,8 @@ ma_couleur="blue"
 HEIGHT = 600
 WIDTH = 600
 
+objets = []
+
 racine = tk.Tk()
 racine.title("Mon dessin")
 
@@ -15,22 +17,39 @@ def choisir():
     
 def cercle():
     """cercle de diamètre 100 et de couleur bleu"""
+    global objets
     x = rd.randint(0, 401)
     y = rd.randint(0,401)    
-    canvas.create_oval((x, y), (x + 100, y + 100), fill = ma_couleur) in canvas
+    objets.append(canvas.create_oval((x, y), (x + 100, y + 100), fill = ma_couleur))
 
 def carre():
     """affiche un carre rouge de côté 100"""
+    global objets
     x = rd.randint(0,401)
     y = rd.randint(0,401)
-    canvas.create_rectangle((x, y), (x+100, y+100), fill= ma_couleur)
+    objets.append(canvas.create_rectangle((x, y), (x+100, y+100), fill= ma_couleur))
 
 def croix():
     """affiche une croix jaune inscrite dans un carre de côté 100"""
+    global objets
     x = rd.randint(0,401)
     y = rd.randint(0,401)
-    canvas.create_line((x, y), (x+100, y+100), fill= ma_couleur)
-    canvas.create_line ((x+100, y), (x, y+100), fill= ma_couleur)
+    objets.append(canvas.create_line((x, y), (x+100, y+100), fill= ma_couleur))
+    objets.append(canvas.create_line ((x+100, y), (x, y+100), fill= ma_couleur))
+
+
+def undo():
+    if canvas.type(objets[-1]) == "line":
+        canvas.delete(objets[-1])
+        del (objets[-1])
+        canvas.delete(objets[-1])
+        del (objets[-1])
+    else :
+        canvas.delete(objets[-1])
+        del (objets[-1])
+        
+
+
 
 
 
@@ -50,5 +69,6 @@ button3.grid(column=0, row=2)
 button4 = tk.Button(text="Croix", command=croix, fg="blue", font=("helvetica", "20"))
 button4.grid(column=0, row=3)
 
-
+button5 = tk.Button(text="Undo", fg="blue", font=("helvetica", "20"), command = undo)
+button5.grid(column=2, row=0)
 racine.mainloop()
